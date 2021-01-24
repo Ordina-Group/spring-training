@@ -1,7 +1,7 @@
 package be.ordina.springtraining.ex02springdatajpa.controller;
 
-import be.ordina.springtraining.ex02springdatajpa.cache.UsersCache;
 import be.ordina.springtraining.ex02springdatajpa.model.User;
+import be.ordina.springtraining.ex02springdatajpa.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,21 +10,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/pages")
 public class UserThymeleafController {
 
-    private final UsersCache usersCache;
+    private final UserService usersService;
 
-    public UserThymeleafController(UsersCache usersCache) {
-        this.usersCache = usersCache;
+    public UserThymeleafController(UserService usersService) {
+        this.usersService = usersService;
     }
 
     @GetMapping("/users-overview")
     public String usersOverview(Model model) {
-        final List<User> users = this.usersCache.getAll();
+        final List<User> users = this.usersService.findAll();
         model.addAttribute("users", users);
         return "users-overview";
     }
@@ -37,8 +36,7 @@ public class UserThymeleafController {
 
     @PostMapping("/add-user")
     public String addUserForm(@ModelAttribute User user) {
-        user.setId(UUID.randomUUID());
-        this.usersCache.add(user);
+        this.usersService.create(user);
         return "redirect:/pages/users-overview";
     }
 

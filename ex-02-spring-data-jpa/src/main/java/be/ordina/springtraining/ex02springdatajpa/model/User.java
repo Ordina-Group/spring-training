@@ -1,12 +1,30 @@
 package be.ordina.springtraining.ex02springdatajpa.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
+@Table(name = "user")
 public class User {
+    @Id
+    @Column(name = "id")
     private UUID id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "age")
     private int age;
+
+    @PrePersist
+    public void ensureUuid() {
+        if (getId() == null) {
+            setId(UUID.randomUUID());
+        }
+    }
 
     public User() {
     }
