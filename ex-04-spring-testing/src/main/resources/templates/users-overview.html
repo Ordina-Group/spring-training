@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Add a user</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    </head>
+    <body>
+        <h1>Users overview</h1>
+        <a href="/pages/add-user">Add user</a>
+        <a href="/logout">Logout</a>
+        <table>
+            <thead>
+            <tr>
+                <th th:text="ID">ID</th>
+                <th th:text="Name">Name</th>
+                <th th:text="Age">Age</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user: ${users}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.age}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
